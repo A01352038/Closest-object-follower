@@ -8,10 +8,7 @@ class follower(Node):
     def __init__(self):
         super().__init__('follower')
 
-        # SUSCIPTORES
-        self.sub = self.create_subscription(LaserScan, "base_scan",
-self.lidar_cb, 10)
-        # PUBLICADORES
+        self.sub = self.create_subscription(LaserScan, "base_scan", self.lidar_cb, 10)
         self.pub = self.create_publisher(Twist, "cmd_vel", 10)
 
         self.timer_period = 1.0
@@ -19,12 +16,14 @@ self.lidar_cb, 10)
 self.timer_callback)
         self.get_logger().info("Node initialized!!!")
 
-        # VARIABLES
         self.lidar = LaserScan()
         self.vel = Twist()
-        self.turning_d = 1.0 # Distancia para empezar a girar
-        self.stop_d = 0.5 # Distancia para detenerse completamente
-        self.k_w = 0.5 # Ganancia proporcional para la velocidad angular
+        # Distancia para empezar a girar
+        self.turning_d = 1.0 
+        # Distancia para detenerse completamente
+        self.stop_d = 0.5 
+        # Ganancia proporcional para la velocidad angular
+        self.k_w = 0.5 
 
     def timer_callback(self):
         # Si no hay datos del LIDAR, detiene el robot
